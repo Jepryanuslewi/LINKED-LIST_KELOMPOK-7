@@ -1,60 +1,51 @@
 #include "header.h"
 
-
-void inisialisasiMahasiswa(Mahasiswa* mahasiswa, string& nama) {
-    mahasiswa->nama = nama;
-    mahasiswa->berikut = nullptr;
-    for (int i = 0; i < MAKSIMAL_PERTEMUAN; ++i) {
-        mahasiswa->kehadiran[i] = 0;
+void Sisip(simpul& L, string nama) {
+    simpul baru = new mahasiswa;
+    baru->nama = nama;
+    for (int i = 0; i < 14; ++i) {
+        baru->kehadiran[i] = 0;
+    }
+    baru->next = NULL;
+    if (L == NULL)
+        L = baru;
+    else {
+        baru->next = L;
+        L = baru;
     }
 }
 
-void tambahKehadiran(Mahasiswa* mahasiswa, int pertemuan) {
-    if (pertemuan >= 1 && pertemuan <= MAKSIMAL_PERTEMUAN) {
-        mahasiswa->kehadiran[pertemuan - 1]++;
-    }
-}
-
-void cetakMahasiswa(Mahasiswa* mahasiswa) {
-    std::cout << "Nama: " << mahasiswa->nama << "\nKehadiran: ";
-    for (int i = 0; i < MAKSIMAL_PERTEMUAN; ++i) {
-        std::cout << mahasiswa->kehadiran[i] << " ";
-    }
-    cout << endl;
-}
-
-Mahasiswa* tambahMahasiswa(Mahasiswa* head, string& nama) {
-    Mahasiswa* mahasiswaBaru = new Mahasiswa;
-    inisialisasiMahasiswa(mahasiswaBaru, nama);
-    mahasiswaBaru->berikut = head;
-    return mahasiswaBaru;
-}
-
-void tambahKehadiranMahasiswa(Mahasiswa* head, string& nama, int pertemuan) {
-    Mahasiswa* saatIni = head;
-    while (saatIni != nullptr) {
-        if (saatIni->nama == nama) {
-            tambahKehadiran(saatIni, pertemuan);
+void TambahKehadiran(simpul& L, string nama, int pertemuan) {
+    simpul bantu = L;
+    while (bantu != NULL) {
+        if (bantu->nama == nama) {
+            if (pertemuan > 0 && pertemuan <= 14) {
+                bantu->kehadiran[pertemuan - 1]++;
+                cout << "Kehadiran mahasiswa " << nama << " pada pertemuan " << pertemuan << " ditambahkan." << endl;
+            } else {
+                cout << "Nomor pertemuan tidak valid." << endl;
+            }
             return;
         }
-        saatIni = saatIni->berikut;
+        bantu = bantu->next;
     }
-    cout << "Mahasiswa tidak ditemukan!" << endl;
+    cout << "Mahasiswa tidak ditemukan." << endl;
 }
 
-void cetakSemuaMahasiswa(Mahasiswa* head) {
-    Mahasiswa* saatIni = head;
-    while (saatIni != nullptr) {
-        cetakMahasiswa(saatIni);
-        saatIni = saatIni->berikut;
+void Cetak(simpul L) {
+    if (L == NULL) {
+        cout << "Data Kosong." << endl;
+        return;
     }
-}
-
-void hapusSemuaMahasiswa(Mahasiswa* head) {
-    Mahasiswa* saatIni = head;
-    while (saatIni != nullptr) {
-        Mahasiswa* mahasiswaBerikutnya = saatIni->berikut;
-        delete saatIni;
-        saatIni = mahasiswaBerikutnya;
+    simpul bantu = L;
+    cout << "Data Mahasiswa dan Kehadiran:" << endl;
+    while (bantu != NULL) {
+        cout << "Nama: " << bantu->nama << endl;
+        cout << "Kehadiran: ";
+        for (int i = 0; i < 14; ++i) {
+            cout << bantu->kehadiran[i] << " ";
+        }
+        cout << endl;
+        bantu = bantu->next;
     }
 }
