@@ -1,19 +1,17 @@
-#include <iostream>
+#include<iostream>
+#include<conio.h>
+#include<stdlib.h>
 #include <string>
-
-#define MAKSIMAL_PERTEMUAN 14
 using namespace std;
-typedef struct Mahasiswa {
+
+struct mahasiswa {
     string nama;
-    int kehadiran[MAKSIMAL_PERTEMUAN];
-    Mahasiswa* berikut;
-} Mahasiswa;
+    int kehadiran[14];
+    mahasiswa* next;
+};
 
-void inisialisasiMahasiswa(Mahasiswa* mahasiswa, string& nama);
-void tambahKehadiran(Mahasiswa* mahasiswa, int pertemuan);
-void cetakMahasiswa(Mahasiswa* mahasiswa);
+typedef mahasiswa* simpul;
 
-Mahasiswa* tambahMahasiswa(Mahasiswa* head, string& nama);
-void tambahKehadiranMahasiswa(Mahasiswa* head, string& nama, int pertemuan);
-void cetakSemuaMahasiswa(Mahasiswa* head);
-void hapusSemuaMahasiswa(Mahasiswa* head);
+void Sisip(simpul& L, string nama);
+void TambahKehadiran(simpul& L, string nama, int pertemuan);
+void Cetak(simpul L);
